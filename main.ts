@@ -25,6 +25,8 @@ const DESCRIPTION = [
 // ---------------------------------------------------------------- canvas ---
 const W = 512;
 const H = 512;
+// Subpixel samples per axis: edges stop being staircases without any library.
+const SS = 3;
 
 function canvas(w, h) {
   return { w, h, px: new Uint8Array(w * h * 3) };
@@ -44,23 +46,37 @@ function rect(c, x, y, w, h, col, a = 1) {
 }
 
 function disc(c, cx, cy, r, col, a = 1) {
+  const steps = SS * SS;
   for (let y = Math.floor(cy - r); y <= cy + r; y++) {
     for (let x = Math.floor(cx - r); x <= cx + r; x++) {
-      const dx = x - cx;
-      const dy = y - cy;
-      if (dx * dx + dy * dy <= r * r) put(c, x, y, col[0], col[1], col[2], a);
+      let inside = 0;
+      for (let sy = 0; sy < SS; sy++) {
+        for (let sx = 0; sx < SS; sx++) {
+          const dx = x + (sx + 0.5) / SS - cx;
+          const dy = y + (sy + 0.5) / SS - cy;
+          if (dx * dx + dy * dy <= r * r) inside++;
+        }
+      }
+      if (inside) put(c, x, y, col[0], col[1], col[2], (a * inside) / steps);
     }
   }
 }
 
 function ring(c, cx, cy, r, thickness, col, a = 1) {
   const inner = r - thickness;
+  const steps = SS * SS;
   for (let y = Math.floor(cy - r); y <= cy + r; y++) {
     for (let x = Math.floor(cx - r); x <= cx + r; x++) {
-      const dx = x - cx;
-      const dy = y - cy;
-      const d = dx * dx + dy * dy;
-      if (d <= r * r && d >= inner * inner) put(c, x, y, col[0], col[1], col[2], a);
+      let inside = 0;
+      for (let sy = 0; sy < SS; sy++) {
+        for (let sx = 0; sx < SS; sx++) {
+          const dx = x + (sx + 0.5) / SS - cx;
+          const dy = y + (sy + 0.5) / SS - cy;
+          const d = dx * dx + dy * dy;
+          if (d <= r * r && d >= inner * inner) inside++;
+        }
+      }
+      if (inside) put(c, x, y, col[0], col[1], col[2], (a * inside) / steps);
     }
   }
 }
