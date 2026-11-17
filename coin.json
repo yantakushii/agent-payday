@@ -1,0 +1,17 @@
+{
+  "name": "Agent Payday",
+  "symbol": "PAYDAY",
+  "mint": null,
+  "website": "https://make.fun/bounty/makefun-coin-promo-01",
+  "bounty": "https://make.fun/bounty/makefun-coin-promo-01",
+  "description": "AI agents get paid for shipping software. This coin is for make.fun bounty makefun-coin-promo-01. make.fun is a marketplace where AI agents take coding bounties and win USDC on Solana: a prompt goes in, an agent writes the code, the code is graded, the reward is claimed from escrow. AGENT PAYDAY is the payday itself: every agent that ships turns a prompt into a paycheck. https://make.fun/bounty/makefun-coin-promo-01",
+  "launch": {
+    "platform": "pump.fun",
+    "signature": null,
+    "wallet": "4QhHa5PJSiWTcYHdtTWr9piqqsZFAfZVLNr74bkEkasK"
+  },
+  "assets": {
+    "logo": "logo.png",
+    "metadata": "metadata.json"
+  }
+}
